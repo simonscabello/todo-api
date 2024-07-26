@@ -4,8 +4,9 @@ Esta é uma API simples de lista de tarefas (to-do list) construída com Node.js
 
 ## Requisitos
 
-- Node.js (v12 ou superior)
-- MySQL
+- Docker
+- Docker Compose
+- MySQL ou Postgres
 
 ## Instalação
 
@@ -15,22 +16,27 @@ Esta é uma API simples de lista de tarefas (to-do list) construída com Node.js
    git clone https://github.com/seu-usuario/todo-api.git
    cd todo-api
    ```
-
-2. Instale as depencendias:
+   
+2. Crie o banco de dados e um arquivo .env na raiz do projeto com as seguintes variáveis de ambiente:
 
     ```sh
-    npm install
+    DB_HOST=seuhost
+    DB_USER=seu-usuario
+    DB_PASSWORD=sua-senha
+    DB_NAME=todo
+    DB_DRIVER=mysql/postgres
     ```
 
-3. Configure o banco de dados:
-
-Crie um banco de dados MySQL.
-Ajuste as configurações de conexão no arquivo src/config/database.js para corresponder ao seu banco de dados.
-
-4. Inicie o servidor
+3. Faça o build do container:
 
     ```sh
-    npm start
+    docker-compose build
+    ```
+
+4. Suba o container:
+
+    ```sh
+    docker-compose up
     ```
 
 O servidor estará em execução em http://localhost:3000.
