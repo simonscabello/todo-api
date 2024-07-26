@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const User = require('./user');
 
 const Todo = sequelize.define('Todo', {
     title: {
@@ -16,6 +17,16 @@ const Todo = sequelize.define('Todo', {
     }
 }, {
     timestamps: true
+});
+
+Todo.belongsTo(User, {
+    foreignKey: 'userId',
+    as: 'user'
+});
+
+User.hasMany(Todo, {
+    foreignKey: 'userId',
+    as: 'todos'
 });
 
 module.exports = Todo;

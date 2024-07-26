@@ -1,27 +1,27 @@
 const Todo = require('../models/todo');
 
-exports.findAll = async () => {
-    return await Todo.findAll();
+exports.findAll = async (userId) => {
+    return await Todo.findAll({ where: { userId } });
 };
 
-exports.create = async (todoData) => {
-    return await Todo.create(todoData);
+exports.create = async (userId, todoData) => {
+    return await Todo.create({ ...todoData, userId });
 };
 
-exports.findById = async (id) => {
-    return await Todo.findByPk(id);
+exports.findById = async (userId, id) => {
+    return await Todo.findOne({ where: { id, userId } });
 };
 
-exports.updateById = async (id, todoData) => {
-    const todo = await Todo.findByPk(id);
+exports.updateById = async (userId, id, todoData) => {
+    const todo = await Todo.findOne({ where: { id, userId } });
     if (todo) {
         return await todo.update(todoData);
     }
     return null;
 };
 
-exports.deleteById = async (id) => {
-    const todo = await Todo.findByPk(id);
+exports.deleteById = async (userId, id) => {
+    const todo = await Todo.findOne({ where: { id, userId } });
     if (todo) {
         await todo.destroy();
         return todo;

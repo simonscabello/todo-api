@@ -1,21 +1,21 @@
 const todoRepository = require('../repositories/todoRepository');
 
-exports.getAllTodos = () => {
-    return todoRepository.findAll();
+exports.getAllTodos = (userId) => {
+    return todoRepository.findAll(userId);
 };
 
-exports.createTodo = (todoData) => {
-    return todoRepository.create(todoData);
+exports.createTodo = (userId, todoData) => {
+    return todoRepository.create(userId, todoData);
 };
 
-exports.getTodoById = (id) => {
-    return todoRepository.findById(id);
+exports.getTodoById = (userId, id) => {
+    return todoRepository.findById(userId, id);
 };
 
-exports.updateTodo = (id, todoData) => {
-    return todoRepository.updateById(id, todoData);
+exports.updateTodo = (userId, id, todoData) => {
+    return todoRepository.updateById(userId, id, todoData);
 };
 
-exports.deleteTodo = (id) => {
-    return todoRepository.deleteById(id);
+exports.deleteTodo = (userId, id) => {
+    return todoRepository.deleteById(userId, id);
 };
