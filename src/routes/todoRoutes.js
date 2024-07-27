@@ -5,7 +5,6 @@ const { validate, validateId } = require('../middlewares/validate');
 const { todoSchema, idSchema } = require('../validators/todoValidator');
 const authenticate = require('../middlewares/auth');
 
-
 /**
  * @swagger
  * components:
@@ -110,7 +109,12 @@ router.post('/', authenticate, validate(todoSchema), todoController.createTodo);
  *       404:
  *         description: The todo was not found
  */
-router.get('/:id', authenticate, validateId(idSchema), todoController.getTodoById);
+router.get(
+  '/:id',
+  authenticate,
+  validateId(idSchema),
+  todoController.getTodoById
+);
 
 /**
  * @swagger
@@ -143,7 +147,13 @@ router.get('/:id', authenticate, validateId(idSchema), todoController.getTodoByI
  *       500:
  *         description: Some error happened
  */
-router.put('/:id', authenticate, validateId(idSchema), validate(todoSchema), todoController.updateTodo);
+router.put(
+  '/:id',
+  authenticate,
+  validateId(idSchema),
+  validate(todoSchema),
+  todoController.updateTodo
+);
 
 /**
  * @swagger
@@ -164,6 +174,11 @@ router.put('/:id', authenticate, validateId(idSchema), validate(todoSchema), tod
  *       404:
  *         description: The todo was not found
  */
-router.delete('/:id', authenticate, validateId(idSchema), todoController.deleteTodo);
+router.delete(
+  '/:id',
+  authenticate,
+  validateId(idSchema),
+  todoController.deleteTodo
+);
 
 module.exports = router;
