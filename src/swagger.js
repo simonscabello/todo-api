@@ -11,11 +11,12 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000/api',
+        url: 'http://localhost:3000/api/v1',
+        description: 'Version 1',
       },
     ],
   },
-  apis: ['./src/routes/*.js'],
+  apis: ['./src/routes/v1/*.js'], // Caminho para os arquivos de rota da versão 1
 };
 
 const swaggerSpec = swaggerJSDoc(options);

@@ -1,8 +1,9 @@
-const todoService = require('../services/todoService');
+const todoService = require('../../services/todoService');
 
 exports.getAllTodos = async (req, res) => {
+  const { page = 1, limit = 10 } = req.query;
   try {
-    const todos = await todoService.getAllTodos(req.user.id);
+    const todos = await todoService.getAllTodos(req.user.id, { page: parseInt(page), limit: parseInt(limit) });
     res.status(200).json(todos);
   } catch (error) {
     res.status(500).json({ message: error.message });

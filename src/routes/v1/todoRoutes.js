@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const todoController = require('../controllers/todoController');
-const { validate, validateId } = require('../middlewares/validate');
-const { todoSchema, idSchema } = require('../validators/todoValidator');
-const authenticate = require('../middlewares/auth');
+const todoController = require('../../controllers/v1/todoController');
+const { validate, validateId } = require('../../middlewares/validate');
+const { todoSchema, idSchema } = require('../../validators/todoValidator');
+const authenticate = require('../../middlewares/auth');
 
 /**
  * @swagger
@@ -50,15 +50,32 @@ const authenticate = require('../middlewares/auth');
  *   get:
  *     summary: Returns the list of all the todos
  *     tags: [Todos]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: The page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: The number of items per page
  *     responses:
  *       200:
  *         description: The list of the todos
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Todo'
+ *               type: object
+ *               properties:
+ *                 total:
+ *                   type: integer
+ *                   description: The total number of todos
+ *                 todos:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Todo'
  */
 router.get('/', authenticate, todoController.getAllTodos);
 
