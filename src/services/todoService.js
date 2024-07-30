@@ -1,8 +1,8 @@
 const todoRepository = require('../repositories/todoRepository');
 
-exports.getAllTodos = (userId, { page = 1, limit = 10 }) => {
+exports.getAllTodos = (userId, { page = 1, limit = 10 } = {} ) => {
   const offset = (page - 1) * limit;
-  return todoRepository.findAll(userId);
+  return todoRepository.findAll(userId, { limit, offset });
 };
 
 exports.createTodo = (userId, todoData) => {
