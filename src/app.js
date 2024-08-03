@@ -5,11 +5,13 @@ const healthRoutes = require('./routes/healthRoutes');
 const authRoutes = require('./routes/v1/authRoutes');
 const helmet = require('helmet');
 const setupSwagger = require('./swagger');
+const apiLimiter = require('./middlewares/rateLimiter'); // Importa o middleware de rate limiting
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(helmet());
+app.use(apiLimiter);
 
 setupSwagger(app);
 
