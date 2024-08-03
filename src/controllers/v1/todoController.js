@@ -1,10 +1,21 @@
 const todoService = require('../../services/todoService');
+const TodoTransformer = require('../../transformers/todoTransformer');
+
+const todoTransformer = new TodoTransformer();
 
 exports.getAllTodos = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
   try {
-    const todos = await todoService.getAllTodos(req.user.id, { page: parseInt(page), limit: parseInt(limit) });
-    res.status(200).json(todos);
+    const { todos, total } = await todoService.getAllTodos(req.user.id, {
+      page: parseInt(page),
+      limit: parseInt(limit),
+    });
+    const transformedTodos = todoTransformer.transformCollection(todos);
+
+    res.status(200).json({
+      total,
+      data: transformedTodos,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -13,7 +24,11 @@ exports.getAllTodos = async (req, res) => {
 exports.createTodo = async (req, res) => {
   try {
     const newTodo = await todoService.createTodo(req.user.id, req.body);
-    res.status(201).json(newTodo);
+    const transformedTodo = todoTransformer.transform(newTodo);
+
+    res.status(201).json({
+      data: transformedTodo,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -25,7 +40,11 @@ exports.getTodoById = async (req, res) => {
     if (!todo) {
       res.status(404).json({ message: 'Todo not found' });
     } else {
-      res.status(200).json(todo);
+      const transformedTodo = todoTransformer.transform(todo);
+
+      res.status(200).json({
+        data: transformedTodo,
+      });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -34,15 +53,15 @@ exports.getTodoById = async (req, res) => {
 
 exports.updateTodo = async (req, res) => {
   try {
-    const updatedTodo = await todoService.updateTodo(
-      req.user.id,
-      req.params.id,
-      req.body
-    );
+    const updatedTodo = await todoService.updateTodo(req.user.id, req.params.id, req.body);
     if (!updatedTodo) {
       res.status(404).json({ message: 'Todo not found' });
     } else {
-      res.status(200).json(updatedTodo);
+      const transformedTodo = todoTransformer.transform(updatedTodo);
+
+      res.status(200).json({
+        data: transformedTodo,
+      });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -51,10 +70,7 @@ exports.updateTodo = async (req, res) => {
 
 exports.deleteTodo = async (req, res) => {
   try {
-    const deletedTodo = await todoService.deleteTodo(
-      req.user.id,
-      req.params.id
-    );
+    const deletedTodo = await todoService.deleteTodo(req.user.id, req.params.id);
     if (!deletedTodo) {
       res.status(404).json({ message: 'Todo not found' });
     } else {
