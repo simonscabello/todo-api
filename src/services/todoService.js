@@ -1,22 +1,21 @@
 const todoRepository = require('../repositories/todoRepository');
 
-exports.getAllTodos = (userId, { page = 1, limit = 10 } = {} ) => {
-  const offset = (page - 1) * limit;
-  return todoRepository.findAll(userId, { limit, offset });
+exports.getAllTodos = async (userId, pagination) => {
+  return await todoRepository.findAll(userId, pagination);
 };
 
-exports.createTodo = (userId, todoData) => {
-  return todoRepository.create(userId, todoData);
+exports.createTodo = async (userId, todoData) => {
+  return await todoRepository.create(userId, todoData);
 };
 
-exports.getTodoById = (userId, id) => {
-  return todoRepository.findById(userId, id);
+exports.getTodoById = async (userId, id) => {
+  return await todoRepository.findById(userId, id);
 };
 
-exports.updateTodo = (userId, id, todoData) => {
-  return todoRepository.updateById(userId, id, todoData);
+exports.updateTodo = async (userId, id, todoData) => {
+  return await todoRepository.updateById(userId, id, todoData);
 };
 
-exports.deleteTodo = (userId, id) => {
-  return todoRepository.deleteById(userId, id);
+exports.deleteTodo = async (userId, id) => {
+  return await todoRepository.deleteById(userId, id);
 };

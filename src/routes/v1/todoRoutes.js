@@ -29,12 +29,16 @@ const authenticate = require('../../middlewares/auth');
  *         userId:
  *           type: integer
  *           description: The ID of the user who owns the todo
+ *         listId:
+ *           type: integer
+ *           description: The ID of the list that the todo belongs to
  *       example:
  *         id: 1
  *         title: "Learn Swagger"
  *         description: "Learn how to document APIs with Swagger"
  *         completed: false
  *         userId: 1
+ *         listId: 1
  */
 
 /**
