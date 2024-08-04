@@ -7,6 +7,7 @@ class TodoTransformer extends Transformer {
       title: todo.title,
       description: todo.description,
       completed: todo.completed,
+      listId: todo.listId,
       // userId: todo.userId,
       createdAt: todo.createdAt,
       updatedAt: todo.updatedAt,

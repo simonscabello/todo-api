@@ -1,23 +1,23 @@
 const Todo = require('../models/todo');
 
-exports.findAll = async (userId, { limit, offset }) => {
-  const { count, rows } = await Todo.findAndCountAll({
-    where: { userId },
-    limit,
-    offset,
-  });
-  return {
-    total: count,
-    todos: rows,
-  };
-};
-
 exports.create = async (userId, todoData) => {
   return await Todo.create({ ...todoData, userId });
 };
 
+exports.findAll = async (userId, { page, limit }) => {
+  const offset = (page - 1) * limit;
+  const todos = await Todo.findAll({
+    where: { userId },
+    limit,
+    offset,
+    include: ['list'],
+  });
+  const total = await Todo.count({ where: { userId } });
+  return { todos, total };
+};
+
 exports.findById = async (userId, id) => {
-  return await Todo.findOne({ where: { id, userId } });
+  return await Todo.findOne({ where: { id, userId }, include: ['list'] });
 };
 
 exports.updateById = async (userId, id, todoData) => {
